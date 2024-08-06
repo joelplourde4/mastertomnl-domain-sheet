@@ -25,7 +25,7 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
         this.actor.setFlag(mName, "relations", this.getRelations(html));
         this.actor.setFlag(mName, "actions", this.getActions(html));
         this.actor.setFlag(mName, "officers", this.getOfficers(html));
-        console.log('Here!!', this.actor);
+        console.log(this.actor);
     }
     
     /*
@@ -171,7 +171,6 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
         $(html)
             .find('a.delete-relation')
             .on("click", (event) => {
-                console.log(event.target);
                 this.deleteRelation(html, event.target.getAttribute("data-relation-id"));
             });
         
@@ -193,12 +192,6 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
             .find('#add-officer')
             .on("click", (event) => {
                 this.addOfficer(html);
-            });
-
-        $(html)
-            .find('change-officer-image')
-            .on("click", (event) => {
-                console.log(event);
             });
 
         // when you click on the delete button
