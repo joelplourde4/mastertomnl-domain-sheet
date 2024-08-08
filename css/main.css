@@ -294,7 +294,11 @@
     right: 5px;
     margin-top: 10px;
 }
-
-.mds .list-padding {
+.mtds .list-padding {
     margin-top: 20px;
+}
+.mtds .officer-visibility {
+    border: none;
+    background: none;
+    width: 50px;
 }

@@ -207,10 +207,10 @@
                         <li class="list-padding">
                             <div class="title-container">
                                 <h2 class="title-action">
-                                    <input type="text" name="flags.mastertomnl-domain-sheet.action.title[]" value="{{action.title}}" placeholder="{{localize 'mtds.ActionTitle'}}" />
+                                    <input type="text" name="flags.mastertomnl-domain-sheet.action.title[]" data-action-id="{{action.id}}" value="{{action.title}}" placeholder="{{localize 'mtds.ActionTitle'}}" />
                                 </h2>
                                 {{#if @root.isGM}}
-                                    <a class="delete-action" data-officer-id="{{action.id}}">{{localize 'mtds.ActionDelete'}}</a>
+                                    <a class="delete-action" data-action-id="{{action.id}}">{{localize 'mtds.ActionDelete'}}</a>
                                 {{/if}}
                             </div>
                             <p class="uses">
@@ -232,21 +232,25 @@
                 {{#if @root.isGM}}<a id="add-officer">+ {{localize 'mtds.OfficerAdd'}}</a>{{/if}}
                 <ol class="officers">
                     {{#each actor.flags.mastertomnl-domain-sheet.officers as |officer|}}
+                    {{#ifEquals officer.visible "hide"}}
                     <li class="list-padding">
                         <div class="title-container">
+                            {{#if @root.isGM}}
+                                <input type="button" name="flags.mastertomnl-domain-sheet.officer.visible[]" value="{{officer.visible}}" class="officer-visibility" data-officer-id="{{officer.id}}"/>
+                            {{/if}}
                             <h2 class="title-action">
                                 <input type="text" name="flags.mastertomnl-domain-sheet.officer.title[]" value="{{officer.title}}" placeholder="{{localize 'mtds.OfficerTitle'}}" />
                             </h2>
                             {{#if @root.isGM}}
-                                <a class="delete-officer" data-officer-id="{{officer.id}}">{{localize 'mtds.OfficerDelete'}}</a>
+                                <a class="delete-officer" name="flags.mastertomnl-domain-sheet.officer.id[]" data-officer-id="{{officer.id}}">{{localize 'mtds.OfficerDelete'}}</a>
                             {{/if}}
                         </div>
-                        <div class="img-col" id="change-officer-image">
-                            <img class="profile" src="{{officer.img}}" title="{{officer.name}}" data-edit="officer.img[]" name="flags.mastertomnl-domain-sheet.officer.img[]"placeholder="{{localize 'mtds.OfficerImage'}}" />
+                        <div class="img-col">
+                            <img id="change-officer-image" class="profile" src="{{officer.img}}" title="{{officer.name}}" data-edit="officer.img[]" name="flags.mastertomnl-domain-sheet.officer.img[]"placeholder="{{localize 'mtds.OfficerImage'}}" />
                         </div>
                         <div class="data-col">
                             <h3>
-                                <input type="text" name="flags.mastertomnl-domain-sheet.officer.name[]" value="{{officer.name}}" placeholder="{{localize 'mtds.OfficerName'}}" />
+                                <input type="text" name="flags.mastertomnl-domain-sheet.officer.name[]" data-officer-id="{{officer.id}}" value="{{officer.name}}" placeholder="{{localize 'mtds.OfficerName'}}" />
                             </h3>
                             {{#if @root.isGM}}
                             <textarea name="flags.mastertomnl-domain-sheet.officer.bonus[]" rows="5" placeholder="{{localize 'mtds.OfficerBonus'}}">{{officer.bonus}}</textarea>
@@ -255,6 +259,7 @@
                             {{/if}}
                         </div>
                     </li>
+                    {{/ifEquals}}
                     {{/each}}
                 </ol>
             </div>
