@@ -3,24 +3,14 @@ const mName = "mastertomnl-domain-sheet";
 const preFlix = "flags.mastertomnl-domain-sheet.";
 
 class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eCharacter {
+
     get template() {
         if (!game.user.isGM && this.actor.limited) return "systems/dnd5e/templates/actors/limited-sheet.hbs";
         return `${modulePath}/template/domain-sheet.hbs`;
     }
     
     async saveDomain(html) {
-        console.log(`MasterTomNLDomainSheet5E | Saving domain info to file for ${this.actor.name}`);
-        /*this.actor.setFlag(mName, "commander", this.getFieldVal(html, 'commander'));
-        this.actor.setFlag(mName, "size", this.getFieldVal(html, 'size'));
-        this.actor.setFlag(mName, "powerdie", this.getFieldVal(html, 'powerdie'));
-        this.actor.setFlag(mName, "diplomacy", this.getNumber(html, 'diplomacy'));
-        this.actor.setFlag(mName, "espionage", this.getNumber(html, 'espionage'));
-        this.actor.setFlag(mName, "lore", this.getNumber(html, 'lore'));
-        this.actor.setFlag(mName, "operations", this.getNumber(html, 'operations'));
-        this.actor.setFlag(mName, "communications", this.getNumber(html, 'communications'));
-        this.actor.setFlag(mName, "resolve", this.getNumber(html, 'resolve'));
-        this.actor.setFlag(mName, "resources", this.getNumber(html, 'resources'));
-        */
+        console.log(`MasterTomNLDomainSheet5E | Saving domain info to flags for ${this.actor.name}`);
         this.actor.setFlag(mName, "powers", this.getPowers(html));
         this.actor.setFlag(mName, "relations", this.getRelations(html));
         this.actor.setFlag(mName, "actions", this.getActions(html));
@@ -34,6 +24,7 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
     getFieldVal(html, name) {
         return $(html).find('[name="flags.mastertomnl-domain-sheet.'+name+'"]').val();
     }
+
     /* return FieldVal as a Number */
     getNumber(html, name) {
         return Number(this.getFieldVal(html, name));
@@ -80,15 +71,20 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
      */
     getActions(html) {
         let actions = [];
-        $(html).find('[name="'+preFlix+'action.title[]"]').each(function(index) {
-            actions[index] = {"title": $(this).val()};
-        });
-        $(html).find('[name="'+preFlix+'action.roll[]"]').each(function(index) {
-            actions[index]["roll"] = $(this).val();
-        });
-        $(html).find('[name="'+preFlix+'action.result[]"]').each(function(index) {
-            actions[index]["result"] = $(this).val();
-        });
+
+        let ids = $(html).find('[name="'+preFlix+'action.title[]"]');
+        let titles = $(html).find('[name="'+preFlix+'action.title[]"]');
+        let rolls = $(html).find('[name="'+preFlix+'action.roll[]"]');
+        let results = $(html).find('[name="'+preFlix+'action.result[]"]');
+
+        for (var i = 0; i < ids.length; i++) {
+            actions.push({
+                "id": $(ids[i]).attr('data-action-id'),
+                "title": $(titles[i]).val(),
+                "roll": $(rolls[i]).val(),
+                "result": $(results[i]).val()
+            });
+        }
         return actions;
     }
     
@@ -97,7 +93,8 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
      */
     getOfficers(html) {
         let officers = [];
-        let ids = $(html).find('.delete-officer');
+
+        let ids = $(html).find('[name="'+preFlix+'officer.name[]"]');
         let images = $(html).find('[name="'+preFlix+'officer.img[]"]');
         let titles = $(html).find('[name="'+preFlix+'officer.title[]"]');
         let names = $(html).find('[name="'+preFlix+'officer.name[]"]');
@@ -135,6 +132,7 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
     }
     
     async getData(options) {
+        console.log(`MasterTomNLDomainSheet5E | Getting Data for ${this.actor.name}`);
         const context = await super.getData(options);
         context.isGM = game.user.isGM;
         context.skillValues = [-1,0,1,2,2,3,3,3,4];
@@ -160,10 +158,6 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
         $(html)
             .find(['input', 'select', 'textarea'].join(","))
             .on("change", (event) => {
-                if (event.target.id === 'toggle-officer-visibility') {
-                    return;
-                }
-                console.log(event)
                 this.saveDomain(html);
             });
         
@@ -305,14 +299,6 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
         return ;
     }
 
-    updateOfficer(html, title) {
-        console.log("MasterTomNL-Domain-Sheet-5e | Update an officer.");
-        let officers = this.getOfficers(html);
-        const officer = officers.find(o => o.title === title);
-        console.log(officer);
-        // this.actor.setFlag(mName, "officers", officers);
-    }
-
     toggleOfficer(html, id) {
         console.log("MasterTomNL-Domain-Sheet-5e | Toggle an officer.");
         let officers = this.getOfficers(html);
@@ -333,8 +319,9 @@ Hooks.once('init', async function () {
     });
 
     Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+        // If the user is the GM, it should always show the officers
         if (game.user.isGM) {
-            return true;
+            return options.fn(this);
         }
 
         return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
