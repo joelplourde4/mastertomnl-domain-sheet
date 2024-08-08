@@ -108,7 +108,7 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
                 "title": $(titles[i]).val(),
                 "name": $(names[i]).val(),
                 "bonus": $(bonuses[i]).val(),
-                "visible": $(visibles[i]).val() === "show" ? "show" : "hide"
+                "visible": $(visibles[i]).val()
             });
         }
         return officers;
@@ -132,7 +132,7 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
     }
     
     async getData(options) {
-        console.log(`MasterTomNLDomainSheet5E | Getting Data for ${this.actor.name}`);
+        console.log(`MasterTomNLDomainSheet5E | Get Data for ${this.actor.name}`);
         const context = await super.getData(options);
         context.isGM = game.user.isGM;
         context.skillValues = [-1,0,1,2,2,3,3,3,4];
