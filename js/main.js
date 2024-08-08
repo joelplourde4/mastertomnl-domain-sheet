@@ -53,6 +53,7 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
      */
     getRelations(html) {
         let relations = [];
+
         $(html).find('[name="'+preFlix+'relation.name[]"]').each(function(index) {
             relations[index] = {"name": $(this).val() };
         });
@@ -225,6 +226,9 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
         return ;
     }
     
+    /**
+     * Function to delete a relation by its name
+     */
     deleteRelation(html, name) {
         console.log("MasterTomNL-Domain-Sheet-5e | Delete a relation.");
         let relations = this.getRelations(html);
@@ -252,6 +256,9 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
         return ;
     }
     
+    /**
+     * Function to delete an action by its id
+     */
     deleteAction(html, id) {
         console.log("MasterTomNL-Domain-Sheet-5e | Delete an action.");
         let actions = this.getActions(html);
@@ -286,6 +293,9 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
         return ;
     }
     
+    /**
+     * Function to delete an officer by its id
+     */
     deleteOfficer(html, id) {
         console.log("MasterTomNL-Domain-Sheet-5e | Delete an officer.");
         let officers = this.getOfficers(html);
@@ -299,6 +309,9 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
         return ;
     }
 
+    /**
+     * Function to toggle an officer by its id
+     */
     toggleOfficer(html, id) {
         console.log("MasterTomNL-Domain-Sheet-5e | Toggle an officer.");
         let officers = this.getOfficers(html);

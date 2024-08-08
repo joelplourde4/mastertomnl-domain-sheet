@@ -202,8 +202,10 @@
     margin: 0.5rem 0 0 0;
 }
 .mtds .relation-name {
-    display: inline-block;
+    float: left;
+    display: block;
     position: relative;
+    height: 32px !important;
     width: 200px !important;
 }
 .mtds .relation-standings {
@@ -212,10 +214,13 @@
 .mtds .delete-relation {
     color: red;
     float: right;
-    padding-top: 8px;
+    display: flex;
+    align-items: center;
 }
 .mtds .relation-list {
     width: 100%;
+    position: relative;
+    display: flex;
 }
 
 /* standings */
