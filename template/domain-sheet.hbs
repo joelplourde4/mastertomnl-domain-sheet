@@ -168,18 +168,6 @@
                             {{#each actor.flags.mastertomnl-domain-sheet.relations as |relation|}}
                             <li class="relation-list">
                                 <input class="relation-name" type="text" name="flags.mastertomnl-domain-sheet.relation.name[]" value="{{relation.name}}" placeholder="{{localize 'mtds.RelationName'}}" />
-                                <!--
-                                {{#if @root.isGM}}
-                                <select class="relation-size {{relation.size}}" name="flags.mastertomnl-domain-sheet.relation.size[]">
-                                    {{#select relation.size }}
-                                    <option value="Major">{{localize 'mtds.Major'}}</option>
-                                    <option value="Minor">{{localize 'mtds.Minor'}}</option>
-                                    {{/select}}
-                                </select>
-                                {{else}}
-                                <span class="relation-size {{relation.size}}">{{relation.size}}</span>
-                                {{/if}}
-                                -->
                                 <select class="relation-standings standings-{{relation.standing}}" name="flags.mastertomnl-domain-sheet.relation.standing[]">
                                     {{#select relation.standing }}
                                     <option value="Hostile">{{localize 'mtds.Hostile'}}</option>
