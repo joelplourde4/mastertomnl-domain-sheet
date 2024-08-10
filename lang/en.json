@@ -67,6 +67,12 @@
         "mtds.ActionDelete": "Delete",
         "mtds.ActionDeleteQuestion": "You are about to delete an Action from the log.",
 
-    "mtds.AreYouSure": "Are you sure?"
+    "mtds.AreYouSure": "Are you sure?",
+
+    "mtds.Features": "Features",
+        "mtds.FeatureAdd": "Add Feature",
+        "mtds.FeatureTitle": "Feature Title",
+        "mtds.FeatureBonus": "Feature bonus...",
+        "mtds.FeatureDelete": "Delete"
 }
 

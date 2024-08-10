@@ -114,7 +114,8 @@
 .mtds .flex-profileimg img.profile {
     border-radius: 3px;
     margin: 10px 0 10px 10px;
-    height: 150px;
+    height: 120px;
+    width: 120px;
     margin: 10px;
     max-height: 150px;
     max-width: 150px;
@@ -259,19 +260,20 @@
 }
 
 /* OFFICERS */
-.mtds .officers {
+.mtds .officers, .mtds .features {
     list-style: none;
     padding: 0;
     margin: 10px 0 0;
 }
-.mtds .officers li {
+.mtds .officers li, .mtds .features li {
     clear: both;
 }
-.mtds .officers h2 {
+.mtds .officers h2, .mtds .features h2 {
     padding-top: 10px;
 }
-.mtds .officers img.profile {
-    width: 120px;
+.mtds .officers img.profile, .mtds .features img.profile {
+    width: 100px;
+    height: 100px;
     border: none;
     left: 10px;
     max-width: 150px;
@@ -280,7 +282,8 @@
 .mtds .img-col {
     position: relative;
     float: left;
-    width: 140px;
+    width: 120px;
+    height: 120px
 }
 .mtds .data-col {
     position: relative;
@@ -298,7 +301,7 @@
     float: right;
     width: 100%;
 }
-.mtds .delete-officer, .mtds .delete-action {
+.mtds .delete-officer, .mtds .delete-action, .mtds .delete-feature {
     color: red;
     position: absolute;
     right: 5px;
@@ -307,7 +310,7 @@
 .mtds .list-padding {
     margin-top: 20px;
 }
-.mtds .officer-visibility {
+.mtds .officer-visibility, .mtds .feature-visibility {
     border: none;
     background: none;
     width: 50px;

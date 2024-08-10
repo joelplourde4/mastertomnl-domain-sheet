@@ -50,6 +50,7 @@
                 <a class="item active" data-tab="stats">{{localize 'mtds.Stats'}}</a>
                 <a class="item" data-tab="action-log">{{localize 'mtds.ActionLog'}}</a>
                 <a class="item" data-tab="officers">{{localize 'mtds.Officers'}}</a>
+                <a class="item" data-tab="features">{{localize 'mtds.Features'}}</a>
             </nav>
         </div>
 
@@ -244,6 +245,40 @@
                             <textarea name="flags.mastertomnl-domain-sheet.officer.bonus[]" rows="5" placeholder="{{localize 'mtds.OfficerBonus'}}">{{officer.bonus}}</textarea>
                             {{else}}
                             <p>{{officer.bonus}}</p>
+                            {{/if}}
+                        </div>
+                    </li>
+                    {{/ifEquals}}
+                    {{/each}}
+                </ol>
+            </div>
+
+            <!-- FEATURES -->
+            <div class="tab" data-group="primary" data-tab="features">
+                {{#if @root.isGM}}<a id="add-feature">+ {{localize 'mtds.FeatureAdd'}}</a>{{/if}}
+                <ol class="features">
+                    {{#each actor.flags.mastertomnl-domain-sheet.features as |feature|}}
+                    {{#ifEquals feature.visible "hide"}}
+                    <li class="list-padding">
+                        <div class="title-container">
+                            {{#if @root.isGM}}
+                                <input type="button" name="flags.mastertomnl-domain-sheet.feature.visible[]" value="{{feature.visible}}" class="feature-visibility" data-feature-id="{{feature.id}}"/>
+                            {{/if}}
+                            <h2 class="title-action">
+                                <input type="text" name="flags.mastertomnl-domain-sheet.feature.title[]" value="{{feature.title}}" data-feature-id="{{feature.id}}" placeholder="{{localize 'mtds.FeatureTitle'}}" />
+                            </h2>
+                            {{#if @root.isGM}}
+                                <a class="delete-feature" name="flags.mastertomnl-domain-sheet.feature.id[]" data-feature-id="{{feature.id}}">{{localize 'mtds.FeatureDelete'}}</a>
+                            {{/if}}
+                        </div>
+                        <div class="img-col">
+                            <img id="change-feature-image" class="profile" src="{{feature.img}}" title="{{feature.name}}" data-edit="feature.img[]" name="flags.mastertomnl-domain-sheet.feature.img[]" placeholder="{{localize 'mtds.FeatureImage'}}" />
+                        </div>
+                        <div class="data-col">
+                            {{#if @root.isGM}}
+                            <textarea name="flags.mastertomnl-domain-sheet.feature.bonus[]" rows="5" placeholder="{{localize 'mtds.FeatureBonus'}}">{{feature.bonus}}</textarea>
+                            {{else}}
+                            <p>{{feature.bonus}}</p>
                             {{/if}}
                         </div>
                     </li>
