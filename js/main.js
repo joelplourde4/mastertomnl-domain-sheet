@@ -15,6 +15,7 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
         this.actor.setFlag(mName, "relations", this.getRelations(html));
         this.actor.setFlag(mName, "actions", this.getActions(html));
         this.actor.setFlag(mName, "officers", this.getOfficers(html));
+        this.actor.setFlag(mName, "features", this.getFeatures(html));
         console.log(this.actor);
     }
     
@@ -114,6 +115,27 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
         }
         return officers;
     }
+
+    getFeatures(html) {
+        let features = [];
+
+        let ids = $(html).find('[name="'+preFlix+'feature.title[]"]');
+        let images = $(html).find('[name="'+preFlix+'feature.img[]"]');
+        let titles = $(html).find('[name="'+preFlix+'feature.title[]"]');
+        let bonuses = $(html).find('[name="'+preFlix+'feature.bonus[]"]');
+        let visibles = $(html).find('[name="'+preFlix+'feature.visible[]"]');
+
+        for (var i=0; i < ids.length; i++) {
+            features.push({
+                "id": $(ids[i]).attr('data-feature-id'),
+                "img": $(images[i]).attr('src'),
+                "title": $(titles[i]).val(),
+                "bonus": $(bonuses[i]).val(),
+                "visible": $(visibles[i]).val()
+            });
+        }
+        return features;
+    }
     
     getUuid() {
         return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
@@ -207,6 +229,27 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
             .find('input.officer-visibility')
             .on('click', (event) => {
                 this.toggleOfficer(html, event.target.getAttribute('data-officer-id'));
+            });
+
+        // when you click on the + we will add a (blank) officer
+        $(html)
+            .find('#add-feature')
+            .on("click", (event) => {
+                this.addFeature(html);
+            });
+
+        // when you click on the delete button
+        $(html)
+            .find('a.delete-feature')
+            .on("click", (event) => {
+                this.deleteFeature(html, event.target.getAttribute("data-feature-id"));
+            });
+
+        // When you click on the show/hide button in the feature tab
+        $(html)
+            .find('input.feature-visibility')
+            .on('click', (event) => {
+                this.toggleFeature(html, event.target.getAttribute('data-feature-id'));
             });
 
         return true;
@@ -321,6 +364,56 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
             }
         }
         this.actor.setFlag(mName, "officers", officers);
+    }
+
+    /**
+     * Feature to add a feature
+     */
+    addFeature(html) {
+        console.log("MasterTomNL-Domain-Sheet-5e | Add Feature.");
+        let features = this.getFeatures(html);
+
+        features.push({
+            "id": this.getUuid(),
+            "img": "",
+            "title": "",
+            "bonus": "",
+            "visible": "hide"
+        });
+
+        // save it to FLAGS
+        this.actor.setFlag(mName, "features", features);
+        return;
+    }
+ 
+    /**
+     * Function to delete a feature by its id
+     */
+    deleteFeature(html, id) {
+        console.log("MasterTomNL-Domain-Sheet-5e | Delete Feature.");
+        let features = this.getFeatures(html);
+        for (var i=0; i < features.length; i++) {
+            if (features[i].id == id) {
+                features.splice(i, 1);
+                break;
+            }
+        }
+        this.actor.setFlag(mName, "features", features);
+        return ;
+    }
+
+    /**
+     * Function to toggle an feature by its id
+     */
+    toggleFeature(html, id) {
+        console.log("MasterTomNL-Domain-Sheet-5e | Toggle a Feature.");
+        let features = this.getFeatures(html);
+        for (var i=0; i < features.length; i++) {
+            if (features[i].id === id) {
+                features[i].visible = features[i].visible === "hide" ? "show" : "hide";
+            }
+        }
+        this.actor.setFlag(mName, "features", features);
     }
 }
 
