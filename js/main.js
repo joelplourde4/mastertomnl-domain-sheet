@@ -14,9 +14,10 @@ class MasterTomNLDomainSheet5E extends dnd5e.applications.actor.ActorSheet5eChar
         this.actor.setFlag(mName, "powers", this.getPowers(html));
         this.actor.setFlag(mName, "relations", this.getRelations(html));
         this.actor.setFlag(mName, "actions", this.getActions(html));
-        this.actor.setFlag(mName, "officers", this.getOfficers(html));
-        this.actor.setFlag(mName, "features", this.getFeatures(html));
-        console.log(this.actor);
+        if (game.user.isGM) {
+            this.actor.setFlag(mName, "officers", this.getOfficers(html));
+            this.actor.setFlag(mName, "features", this.getFeatures(html));
+        }
     }
     
     /*
